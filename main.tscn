@@ -1,0 +1,83 @@
+[gd_scene load_steps=6 format=3 uid="uid://1kf46trg73ji"]
+
+[ext_resource type="Script" path="res://main.gd" id="1"]
+[ext_resource type="Script" path="res://roadSpawner.gd" id="2"]
+[ext_resource type="Script" path="res://vehicleSpawner.gd" id="3"]
+[ext_resource type="Texture2D" uid="uid://b8whevsabdyny" path="res://icon.png" id="4"]
+[ext_resource type="Texture2D" uid="uid://ci0q228fnsaoh" path="res://PNG/cross.png" id="5"]
+
+[node name="main" type="Node2D"]
+script = ExtResource("1")
+
+[node name="roadSpawner" type="Node2D" parent="."]
+script = ExtResource("2")
+
+[node name="vehicleSpawner" type="Node2D" parent="."]
+script = ExtResource("3")
+
+[node name="Sprite2D" type="Sprite2D" parent="vehicleSpawner"]
+visible = false
+texture = ExtResource("4")
+
+[node name="vehicleSpawnTimer" type="Timer" parent="vehicleSpawner"]
+
+[node name="gui" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="gui"]
+layout_mode = 0
+offset_right = 144.0
+offset_bottom = 30.0
+
+[node name="selectFastRoad" type="Button" parent="gui/HBoxContainer"]
+layout_mode = 2
+text = "fast road"
+
+[node name="selectSlowRoad" type="Button" parent="gui/HBoxContainer"]
+layout_mode = 2
+text = "slow road"
+
+[node name="selectNormalRoad" type="Button" parent="gui/HBoxContainer"]
+layout_mode = 2
+text = "normal road"
+
+[node name="spawn1Car" type="Button" parent="gui/HBoxContainer"]
+layout_mode = 2
+text = "1 car"
+
+[node name="spawn10Cars" type="Button" parent="gui/HBoxContainer"]
+layout_mode = 2
+text = "10 cars"
+
+[node name="spawn50Cars" type="Button" parent="gui/HBoxContainer"]
+layout_mode = 2
+text = "50 cars"
+
+[node name="roadDelete" type="Button" parent="gui/HBoxContainer"]
+layout_mode = 2
+text = "DELTE ROAD"
+
+[node name="restart" type="Button" parent="gui/HBoxContainer"]
+layout_mode = 2
+text = "RESTART"
+
+[node name="confirmRestart" type="ConfirmationDialog" parent="gui"]
+dialog_text = "are you sure you want to restart?"
+
+[node name="cursor" type="Sprite2D" parent="."]
+scale = Vector2(1.68, 1.68)
+texture = ExtResource("5")
+
+[connection signal="timeout" from="vehicleSpawner/vehicleSpawnTimer" to="vehicleSpawner" method="_on_vehicleSpawnTimer_timeout"]
+[connection signal="button_down" from="gui/HBoxContainer/selectFastRoad" to="." method="_on_selectFastRoad_button_down"]
+[connection signal="button_down" from="gui/HBoxContainer/selectSlowRoad" to="." method="_on_selectSlowRoad_button_down"]
+[connection signal="button_down" from="gui/HBoxContainer/selectNormalRoad" to="." method="_on_selectNormalRoad_button_down"]
+[connection signal="button_down" from="gui/HBoxContainer/spawn1Car" to="vehicleSpawner" method="_on_spawn1Car_button_down"]
+[connection signal="button_down" from="gui/HBoxContainer/spawn10Cars" to="vehicleSpawner" method="_on_spawn10Cars_button_down"]
+[connection signal="button_down" from="gui/HBoxContainer/spawn50Cars" to="vehicleSpawner" method="_on_spawn50Cars_button_down"]
+[connection signal="button_down" from="gui/HBoxContainer/roadDelete" to="." method="_on_roadDelete_button_down"]
+[connection signal="button_down" from="gui/HBoxContainer/restart" to="." method="_on_restart_button_down"]
+[connection signal="confirmed" from="gui/confirmRestart" to="." method="_on_confirmRestart_confirmed"]
